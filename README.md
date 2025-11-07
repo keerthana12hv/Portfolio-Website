@@ -34,7 +34,7 @@ keerthana-portfolio/
 You can download my resume directly from the **Download Resume** button on the website homepage.
 
 ## 🔗 Live Website
-👉 [keerthana12hv.github.io/keerthana-portfolio](https://keerthana12hv.github.io/keerthana-portfolio)
+👉 [keerthana12hv.github.io/keerthana-portfolio](https://keerthana12hv.github.io/Portfolio-Website)
 
 ---
 
