@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J Keerthana | Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      background: #111;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    header h2 { color: #00ffd5; }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    nav a:hover { color: #00ffd5; }
+    section { padding: 4rem 2rem; }
+    h2 {
+      font-size: 2rem;
+      color: #00ffd5;
+      margin-bottom: 1rem;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { text-align: center; margin-top: 2rem; }
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #00ffd5;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      color: #ccc;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .resume-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #00ffd5;
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+    .resume-btn:hover {
+      background-color: #00c8aa;
+      transform: scale(1.03);
+    }
+
+    /* ---------- Cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background-color: #171717;
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+    }
+    .card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; color: #fff; }
+    .card p { color: #cfcfcf; line-height: 1.45; font-size: 0.95rem; }
+
+    /* ---------- Tech Tags ---------- */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+    }
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.03);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* subtle color set */
+    .tag.python { background:#fff3b0; color:#1c1c1c; border-color: rgba(0,0,0,0.08); }
+    .tag.streamlit { background:#d7f7ee; color:#052f2a; border-color: rgba(0,0,0,0.06); }
+    .tag.fastapi { background:#dff2ff; color:#003046; border-color: rgba(0,0,0,0.06); }
+    .tag.java { background:#fff0e0; color:#341a00; border-color: rgba(0,0,0,0.06); }
+    .tag.murf { background:#e8fff2; color:#003827; border-color: rgba(0,0,0,0.06); }
+    .tag.generic { background: rgba(0,255,213,0.06); color: #00ffd5; border-color: rgba(0,255,213,0.18); }
+
+    /* ---------- Links row ---------- */
+    .links {
+      margin-top: 0.8rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .links a {
+      color: #00ffd5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .links a:hover { text-decoration: underline; color: #00c8aa; }
+
+    /* ---------- Skills ---------- */
+    .skill-card {
+      background-color: #171717;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .skill-card h4 { margin-bottom: 10px; font-size: 16px; color: #fff; }
+    .skill-list { color: #c8c8c8; margin-left: 18px; }
+    .skill-list li { margin-bottom: 8px; }
+
+    /* ---------- Education ---------- */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 2rem; }
+    ul.education { list-style: none; color: #cfcfcf; }
+    ul.education li {
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* ---------- Contact ---------- */
+    .contact { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .contact-item { display: flex; align-items: center; }
+    .contact i { font-size: 1.6rem; margin-right: 1rem; color: #00ffd5; }
+    .contact a { color: white; text-decoration: none; }
+    .contact a:hover { color: #00ffd5; text-decoration: underline; }
+
+    footer { text-align: center; padding: 2rem; background: #111; color: #aaa; }
+
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Simple small helpers used in the content */
+    .cert-link-inline {
+      color: #0bb28b !important;
+      background: rgba(11,178,139,0.06);
+      padding: 8px 12px;
+      border-radius: 8px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      border: 1px solid rgba(11,178,139,0.12);
+      font-weight:700;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>J Keerthana</h2>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Aspiring Software Developer</h1>
+    <p>Exploring Java, DSA & Web Development. I build backend APIs and practical projects integrating Generative AI and real-world use cases.</p>
+    <a href="J-Keerthana-Resume.pdf" download class="resume-btn">Download Resume</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I’m a B.E. Information Science student at Bangalore Institute of Technology (VTU). I build practical full-stack
+      and backend projects that combine Java and Python engineering with small, useful AI features — for example, RAG-based
+      document search, embeddings for semantic matching, and production-ready TTS/transcription demos. My projects focus on
+      clean engineering, deployable demos, and readable code (examples: LawGlance RAG assistant, Murf TTS demo, and a Java Notepad).
+    </p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>LawGlance — RAG LLM Legal Assistant</h3>
+        <p>AI-powered legal assistant using Retrieval-Augmented Generation for simplified Indian law queries. Integrated FAISS for semantic search and Groq API (LLaMA-3.3-70B) for contextual responses.</p>
+
+        <div class="tags" aria-hidden="true">
+          <span class="tag generic">Python</span>
+          <span class="tag generic">Streamlit</span>
+          <span class="tag generic">FAISS</span>
+          <span class="tag generic">RAG</span>
+          <span class="tag generic">Groq API</span>
+        </div>
+
+        <div class="links">
+          <a href="https://github.com/keerthana12hv/LawGlance-RAG-LLM-Legal-Assistant.git" target="_blank" rel="noopener">
+            <i class="fab fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>MurfAPI — Text-to-Speech & Transcription App</h3>
+        <p>A full-stack web application that converts text to speech and transcribes audio using Murf and AssemblyAI APIs. Features a real-time Echo Bot for interactive AI conversations.</p>
+
+        <div class="tags" aria-hidden="true">
+          <span class="tag generic">Python</span>
+          <span class="tag generic">FastAPI</span>
+          <span class="tag generic">Murf API</span>
+          <span class="tag generic">AssemblyAI</span>
+          <span class="tag generic">Render</span>
+        </div>
+
+        <div class="links">
+          <a href="https://github.com/keerthana12hv/Murf-AI-Voice-Studio.git" target="_blank" rel="noopener">
+            <i class="fab fa-github" aria-hidden="true"></i> GitHub
+          </a>
+          <a href="https://murf-ai-voice-tools.onrender.com/" target="_blank" rel="noopener">
+            Live demo <i class="fas fa-arrow-up-right-from-square" style="font-size:0.9rem;"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Notepad — Java Swing</h3>
+        <p>A desktop Notepad application built with Java Swing, supporting text creation, editing, and saving. A demonstration of core Java, OOP, and GUI fundamentals using Java I/O.</p>
+        <div class="tags" aria-hidden="true">
+          <span class="tag generic">Java</span>
+          <span class="tag generic">Swing</span>
+          <span class="tag generic">OOP</span>
+          <span class="tag generic">GUI</span>
+        </div>
+
+        <div class="links">
+          <a href="https://github.com/keerthana12hv/Java-Notepad-Editor.git" target="_blank" rel="noopener">
+            <i class="fab fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="grid">
+      <div class="skill-card">
+        <h4>Languages</h4>
+        <ul class="skill-list">
+          <li>Java (OOP, DSA, JDBC, Swing, Tomcat)</li>
+          <li>Python</li>
+          <li>C</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <h4>Web & APIs</h4>
+        <ul class="skill-list">
+          <li>HTML5 </li>
+          <li>API Integration (Murf, AssemblyAI, Groq)</li>
+          <li>Hosting (Render, GitHub Pages)</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <h4>Databases & Tools</h4>
+        <ul class="skill-list">
+          <li>Git & GitHub</li>
+          <li>VS Code</li>
+          <li>Eclipse</li>
+          <li>Google Colab</li>
+          <li>Oracle SQL</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <h4>Core Concepts</h4>
+        <ul class="skill-list">
+          <li>Data Structures & Algorithms</li>
+          <li>DBMS</li>
+          <li>Operating Systems</li>
+          <li>SDLC (Agile, Linear)</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <h4>Generative AI</h4>
+        <ul class="skill-list">
+          <li>LLM Basics</li>
+          <li>Embeddings / FAISS</li>
+          <li>Prompt Engineering</li>
+          <li>RAG</li>
+          <li>Oracle OCI GenAI</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <h2>Education & Certifications</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Education</h3>
+        <ul class="education">
+          <li><strong>B.E. (ISE)</strong> — Bangalore Institute of Technology (VTU) • CGPA: 8.5</li>
+          <li><strong>12th (PCMC)</strong> — New Sri Chaitanya PU College • 84%</li>
+          <li><strong>10th</strong> — Dream World School • 80.6%</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Certifications</h3>
+        <ul class="education">
+          <li>Java Programming Fundamentals — Infosys Springboard</li>
+          <li>OCI AI Foundation Associate — Oracle</li>
+          <li>OCI Generative AI Professional — Oracle</li>
+          <div class="links">
+          <li> <a href="https://drive.google.com/drive/folders/1ClPUA_mkbU_PbGqYwoBHTlkd1qp4ZNTf" class="cert-link" target="_blank" rel="noopener">
+          <i class="fas fa-arrow-up-right-from-square" ></i>
+          Certificates Folder (Google Drive)</div>
+</a></div></li>
+        </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+
+    <!-- simple two-column contact layout using existing .grid -->
+    <div class="grid">
+      <div class="card">
+        <h3>Get in touch</h3>
+        <p style="color:#cfcfcf;">
+          I'm open to internships, project collaborations and mentorship conversations. Prefer email for quick replies — I usually respond within a few days.
+        </p>
+
+        <div class="contact" style="margin-top:1rem;">
+          <div class="contact-item">
+            <i class="fab fa-github" aria-hidden="true"></i>
+            <div>
+              <a href="https://github.com/keerthana12hv" target="_blank" rel="noopener">github.com/keerthana12hv</a>
+              <div style="color:#aeb3b3; font-size:0.9rem;">View code & projects</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <div>
+              <a href="mailto:jkeerthana925@gmail.com">jkeerthana925@gmail.com</a>
+            </div>
+          </div>
+
+        
+        </div>
+      </div>
+
+      <div class="card" aria-label="Contact form">
+        <h3>Quick message</h3>
+        <form action="https://formspree.io/f/mjkpnqvr" method="POST" style="margin-top:0.8rem;">
+          <div style="display:flex; flex-direction:column; gap:0.8rem;">
+            <input class="form-control" type="text" name="name" placeholder="Your name" required aria-label="Your name" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff;">
+            <input class="form-control" type="email" name="email" placeholder="Your email" required aria-label="Your email" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff;">
+            <textarea class="form-control" name="message" placeholder="Your message" required aria-label="Your message" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff; min-height:120px;"></textarea>
+            <button class="resume-btn" style="width:100%; background:linear-gradient(90deg,#00ffd5,#b6ffdf); color:#000; border-radius:8px;">Send Message</button>
+            <p style="color:#aeb3b3; font-size:0.92rem; margin-top:6px;">
+              If you prefer email, write to <a href="mailto:jkeerthana925@gmail.com" style="color:#00ffd5; text-decoration:underline;">jkeerthana925@gmail.com</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 J Keerthana. All rights reserved.</p>
+  </footer>
+</body>
+</html>
