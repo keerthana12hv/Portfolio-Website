@@ -1,422 +1,518 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>J Keerthana | Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #0f0f0f;
-      color: #fff;
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J Keerthana | Information Science Student</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        bgDark: '#0f172a',    // slate-900
+                        bgCard: '#1e293b',    // slate-800
+                        bgHover: '#334155',   // slate-700
+                        textMain: '#f8fafc',  // slate-50
+                        textMuted: '#94a3b8', // slate-400
+                        accent: '#6366f1',    // indigo-500
+                        accentHover: '#4f46e5'// indigo-600
+                    }
+                }
+            }
+        }
+    </script>
 
-    /* ---------- Header ---------- */
-    header {
-      background: #111;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    header h2 { color: #00ffd5; }
-    nav a {
-      color: white;
-      margin-left: 1rem;
-      text-decoration: none;
-      transition: color 0.25s;
-    }
-    nav a:hover { color: #00ffd5; }
-    section { padding: 4rem 2rem; }
-    h2 {
-      font-size: 2rem;
-      color: #00ffd5;
-      margin-bottom: 1rem;
-    }
-
-    /* ---------- Hero ---------- */
-    .hero { text-align: center; margin-top: 2rem; }
-    .hero h1 {
-      font-size: 2.5rem;
-      color: #00ffd5;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      margin-top: 1rem;
-      color: #ccc;
-      max-width: 820px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .resume-btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.8rem 1.5rem;
-      background-color: #00ffd5;
-      color: #000;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s ease;
-    }
-    .resume-btn:hover {
-      background-color: #00c8aa;
-      transform: scale(1.03);
-    }
-
-    /* ---------- Cards ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .card {
-      background-color: #171717;
-      padding: 1.5rem;
-      border-radius: 12px;
-      transition: transform 0.25s, box-shadow 0.25s;
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
-    }
-    .card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; color: #fff; }
-    .card p { color: #cfcfcf; line-height: 1.45; font-size: 0.95rem; }
-
-    /* ---------- Tech Tags ---------- */
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.85rem;
-    }
-    .tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border: 1px solid rgba(255,255,255,0.03);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    /* subtle color set */
-    .tag.python { background:#fff3b0; color:#1c1c1c; border-color: rgba(0,0,0,0.08); }
-    .tag.streamlit { background:#d7f7ee; color:#052f2a; border-color: rgba(0,0,0,0.06); }
-    .tag.fastapi { background:#dff2ff; color:#003046; border-color: rgba(0,0,0,0.06); }
-    .tag.java { background:#fff0e0; color:#341a00; border-color: rgba(0,0,0,0.06); }
-    .tag.murf { background:#e8fff2; color:#003827; border-color: rgba(0,0,0,0.06); }
-    .tag.generic { background: rgba(0,255,213,0.06); color: #00ffd5; border-color: rgba(0,255,213,0.18); }
-
-    /* ---------- Links row ---------- */
-    .links {
-      margin-top: 0.8rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    .links a {
-      color: #00ffd5;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .links a:hover { text-decoration: underline; color: #00c8aa; }
-
-    /* ---------- Skills ---------- */
-    .skill-card {
-      background-color: #171717;
-      padding: 1.2rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .skill-card h4 { margin-bottom: 10px; font-size: 16px; color: #fff; }
-    .skill-list { color: #c8c8c8; margin-left: 18px; }
-    .skill-list li { margin-bottom: 8px; }
-
-    /* ---------- Education ---------- */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 2rem; }
-    ul.education { list-style: none; color: #cfcfcf; }
-    ul.education li {
-      padding: 12px;
-      background: rgba(255,255,255,0.02);
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-
-    /* ---------- Contact ---------- */
-    .contact { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-    .contact-item { display: flex; align-items: center; }
-    .contact i { font-size: 1.6rem; margin-right: 1rem; color: #00ffd5; }
-    .contact a { color: white; text-decoration: none; }
-    .contact a:hover { color: #00ffd5; text-decoration: underline; }
-
-    footer { text-align: center; padding: 2rem; background: #111; color: #aaa; }
-
-    @media (max-width: 720px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    /* Simple small helpers used in the content */
-    .cert-link-inline {
-      color: #0bb28b !important;
-      background: rgba(11,178,139,0.06);
-      padding: 8px 12px;
-      border-radius: 8px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      border: 1px solid rgba(11,178,139,0.12);
-      font-weight:700;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h2>J Keerthana</h2>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Aspiring Software Developer</h1>
-    <p>Exploring Java, DSA & Web Development. I build backend APIs and practical projects integrating Generative AI and real-world use cases.</p>
-    <a href="J-Keerthana-Resume.pdf" download class="resume-btn">Download Resume</a>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I’m a B.E. Information Science student at Bangalore Institute of Technology (VTU). I build practical full-stack
-      and backend projects that combine Java and Python engineering with small, useful AI features — for example, RAG-based
-      document search, embeddings for semantic matching, and production-ready TTS/transcription demos. My projects focus on
-      clean engineering, deployable demos, and readable code (examples: LawGlance RAG assistant, Murf TTS demo, and a Java Notepad).
-    </p>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="grid">
-      <div class="card">
-        <h3>LawGlance — RAG LLM Legal Assistant</h3>
-        <p>AI-powered legal assistant using Retrieval-Augmented Generation for simplified Indian law queries. Integrated FAISS for semantic search and Groq API (LLaMA-3.3-70B) for contextual responses.</p>
-
-        <div class="tags" aria-hidden="true">
-          <span class="tag generic">Python</span>
-          <span class="tag generic">Streamlit</span>
-          <span class="tag generic">FAISS</span>
-          <span class="tag generic">RAG</span>
-          <span class="tag generic">Groq API</span>
-        </div>
-
-        <div class="links">
-          <a href="https://github.com/keerthana12hv/LawGlance-RAG-LLM-Legal-Assistant.git" target="_blank" rel="noopener">
-            <i class="fab fa-github" aria-hidden="true"></i> GitHub
-          </a>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>MurfAPI — Text-to-Speech & Transcription App</h3>
-        <p>A full-stack web application that converts text to speech and transcribes audio using Murf and AssemblyAI APIs. Features a real-time Echo Bot for interactive AI conversations.</p>
-
-        <div class="tags" aria-hidden="true">
-          <span class="tag generic">Python</span>
-          <span class="tag generic">FastAPI</span>
-          <span class="tag generic">Murf API</span>
-          <span class="tag generic">AssemblyAI</span>
-          <span class="tag generic">Render</span>
-        </div>
-
-        <div class="links">
-          <a href="https://github.com/keerthana12hv/Murf-AI-Voice-Studio.git" target="_blank" rel="noopener">
-            <i class="fab fa-github" aria-hidden="true"></i> GitHub
-          </a>
-          <a href="https://murf-ai-voice-tools.onrender.com/" target="_blank" rel="noopener">
-            Live demo <i class="fas fa-arrow-up-right-from-square" style="font-size:0.9rem;"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Notepad — Java Swing</h3>
-        <p>A desktop Notepad application built with Java Swing, supporting text creation, editing, and saving. A demonstration of core Java, OOP, and GUI fundamentals using Java I/O.</p>
-        <div class="tags" aria-hidden="true">
-          <span class="tag generic">Java</span>
-          <span class="tag generic">Swing</span>
-          <span class="tag generic">OOP</span>
-          <span class="tag generic">GUI</span>
-        </div>
-
-        <div class="links">
-          <a href="https://github.com/keerthana12hv/Java-Notepad-Editor.git" target="_blank" rel="noopener">
-            <i class="fab fa-github" aria-hidden="true"></i> GitHub
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <h2>Technical Skills</h2>
-    <div class="grid">
-      <div class="skill-card">
-        <h4>Languages</h4>
-        <ul class="skill-list">
-          <li>Java (OOP, DSA, JDBC, Swing, Tomcat)</li>
-          <li>Python</li>
-          <li>C</li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <h4>Web & APIs</h4>
-        <ul class="skill-list">
-          <li>HTML5 </li>
-          <li>API Integration (Murf, AssemblyAI, Groq)</li>
-          <li>Hosting (Render, GitHub Pages)</li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <h4>Databases & Tools</h4>
-        <ul class="skill-list">
-          <li>Git & GitHub</li>
-          <li>VS Code</li>
-          <li>Eclipse</li>
-          <li>Google Colab</li>
-          <li>Oracle SQL</li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <h4>Core Concepts</h4>
-        <ul class="skill-list">
-          <li>Data Structures & Algorithms</li>
-          <li>DBMS</li>
-          <li>Operating Systems</li>
-          <li>SDLC (Agile, Linear)</li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <h4>Generative AI</h4>
-        <ul class="skill-list">
-          <li>LLM Basics</li>
-          <li>Embeddings / FAISS</li>
-          <li>Prompt Engineering</li>
-          <li>RAG</li>
-          <li>Oracle OCI GenAI</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <h2>Education & Certifications</h2>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Education</h3>
-        <ul class="education">
-          <li><strong>B.E. (ISE)</strong> — Bangalore Institute of Technology (VTU) • CGPA: 8.5</li>
-          <li><strong>12th (PCMC)</strong> — New Sri Chaitanya PU College • 84%</li>
-          <li><strong>10th</strong> — Dream World School • 80.6%</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Certifications</h3>
-        <ul class="education">
-          <li>Java Programming Fundamentals — Infosys Springboard</li>
-          <li>OCI AI Foundation Associate — Oracle</li>
-          <li>OCI Generative AI Professional — Oracle</li>
-          <div class="links">
-          <li> <a href="https://drive.google.com/drive/folders/1ClPUA_mkbU_PbGqYwoBHTlkd1qp4ZNTf" class="cert-link" target="_blank" rel="noopener">
-          <i class="fas fa-arrow-up-right-from-square" ></i>
-          Certificates Folder (Google Drive)</div>
-</a></div></li>
-        </ul>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact Me</h2>
-
-    <!-- simple two-column contact layout using existing .grid -->
-    <div class="grid">
-      <div class="card">
-        <h3>Get in touch</h3>
-        <p style="color:#cfcfcf;">
-          I'm open to internships, project collaborations and mentorship conversations. Prefer email for quick replies — I usually respond within a few days.
-        </p>
-
-        <div class="contact" style="margin-top:1rem;">
-          <div class="contact-item">
-            <i class="fab fa-github" aria-hidden="true"></i>
-            <div>
-              <a href="https://github.com/keerthana12hv" target="_blank" rel="noopener">github.com/keerthana12hv</a>
-              <div style="color:#aeb3b3; font-size:0.9rem;">View code & projects</div>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <i class="fas fa-envelope" aria-hidden="true"></i>
-            <div>
-              <a href="mailto:jkeerthana925@gmail.com">jkeerthana925@gmail.com</a>
-            </div>
-          </div>
-
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
         
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Scroll margin for sticky header offset */
+        section { scroll-margin-top: 5rem; }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-bgDark/80 backdrop-blur-md border-b border-bgHover">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo/Name -->
+                <a href="#" class="text-xl font-bold tracking-tight text-textMain hover:text-accent transition-colors">
+                    JK<span class="text-accent">.</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-textMuted">
+                    <a href="#about" class="hover:text-textMain transition-colors">About</a>
+                    <a href="#skills" class="hover:text-textMain transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-textMain transition-colors">Projects</a>
+                    <a href="#certifications" class="hover:text-textMain transition-colors">Certifications</a>
+                    <a href="#resume" class="hover:text-textMain transition-colors">Resume</a>
+                    <a href="#contact" class="hover:text-textMain transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-textMuted hover:text-textMain focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bgCard border-b border-bgHover">
+            <div class="px-4 pt-2 pb-6 space-y-2 text-sm font-medium text-textMuted">
+                <a href="#about" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">About</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Skills</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Projects</a>
+                <a href="#certifications" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Certifications</a>
+                <a href="#resume" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Resume</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-      <div class="card" aria-label="Contact form">
-        <h3>Quick message</h3>
-        <form action="https://formspree.io/f/mjkpnqvr" method="POST" style="margin-top:0.8rem;">
-          <div style="display:flex; flex-direction:column; gap:0.8rem;">
-            <input class="form-control" type="text" name="name" placeholder="Your name" required aria-label="Your name" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff;">
-            <input class="form-control" type="email" name="email" placeholder="Your email" required aria-label="Your email" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff;">
-            <textarea class="form-control" name="message" placeholder="Your message" required aria-label="Your message" style="padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(0,0,0,0.25); color:#fff; min-height:120px;"></textarea>
-            <button class="resume-btn" style="width:100%; background:linear-gradient(90deg,#00ffd5,#b6ffdf); color:#000; border-radius:8px;">Send Message</button>
-            <p style="color:#aeb3b3; font-size:0.92rem; margin-top:6px;">
-              If you prefer email, write to <a href="mailto:jkeerthana925@gmail.com" style="color:#00ffd5; text-decoration:underline;">jkeerthana925@gmail.com</a>.
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-12 px-6">
+            <div class="max-w-3xl w-full text-left reveal">
+                <p class="text-accent font-medium mb-4 tracking-wide">Hi, my name is</p>
+                <h2 class="text-5xl md:text-7xl font-bold text-textMain mb-4 tracking-tight">J Keerthana.</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-textMuted mb-8 leading-tight">
+                    Information Science Student<br class="hidden md:block">
+                    <span class="text-2xl md:text-4xl">| Java • Spring Boot • AI Projects</span>
+                </h3>
+                <p class="text-lg text-textMuted max-w-2xl mb-10 leading-relaxed">
+                    Building practical software projects using Java, Spring Boot, SQL, and modern AI technologies while continuously improving software engineering and problem-solving skills.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="px-6 py-3 bg-accent hover:bg-accentHover text-white font-medium rounded-lg transition-colors duration-300 shadow-lg shadow-accent/20">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-6 py-3 bg-transparent border border-textMuted hover:border-textMain text-textMain font-medium rounded-lg transition-colors duration-300">
+                        Contact Me
+                    </a>
+                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" class="px-6 py-3 bg-transparent border border-textMuted hover:border-textMain text-textMain font-medium rounded-lg transition-colors duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-file-pdf"></i> Resume
+                    </a>
+                </div>
+            </div>
+        </section>
 
-  <footer>
-    <p>&copy; 2025 J Keerthana. All rights reserved.</p>
-  </footer>
+        <!-- About Section -->
+        <section id="about" class="py-20 px-6 bg-bgCard/30">
+            <div class="max-w-4xl mx-auto reveal">
+                <div class="flex items-center gap-4 mb-10">
+                    <h2 class="text-3xl font-bold text-textMain">About Me</h2>
+                    <div class="h-px bg-bgHover flex-grow"></div>
+                </div>
+                
+                <div class="text-textMuted leading-relaxed space-y-6 text-lg">
+                    <p>
+                        I am an Information Science student at Bangalore Institute of Technology with an interest in backend development, full-stack applications, and AI-powered software solutions.
+                    </p>
+                    <p>
+                        I enjoy building practical projects using Java, Spring Boot, SQL, and modern AI technologies. My academic journey and project experiences have allowed me to continuously improve my problem-solving abilities and software engineering skills, preparing me for impactful roles in the tech industry.
+                    </p>
+                    
+                    <div class="mt-8 p-6 border border-bgHover rounded-xl bg-bgCard/50 inline-block">
+                        <h3 class="text-textMain font-semibold mb-2"><i class="fa-solid fa-graduation-cap text-accent mr-2"></i>Education</h3>
+                        <p class="text-sm font-bold">Bachelor of Engineering (Information Science & Engineering) | 2023 - 2027</p>
+                        <p class="text-sm">Bangalore Institute of Technology, Bangalore</p>
+                        <p class="text-sm font-medium text-accent mt-2">Current CGPA: 8.47 / 10</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 px-6">
+            <div class="max-w-5xl mx-auto reveal">
+                <div class="flex items-center gap-4 mb-12">
+                    <h2 class="text-3xl font-bold text-textMain">Technical Skills</h2>
+                    <div class="h-px bg-bgHover flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Languages -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-code text-accent"></i> Languages
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Java</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Python</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">SQL</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JavaScript</span>
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-server text-accent"></i> Backend
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Spring Boot</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">REST APIs</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JPA / Hibernate</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JWT Auth</span>
+                        </div>
+                    </div>
+
+                    <!-- Databases -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-database text-accent"></i> Databases
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">PostgreSQL</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">MySQL</span>
+                        </div>
+                    </div>
+
+                    <!-- AI & GenAI -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors lg:col-span-2">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-brain text-accent"></i> AI & Generative AI
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">RAG Systems</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">FAISS</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Sentence Transformers</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">LLM Integration</span>
+                        </div>
+                    </div>
+
+                    <!-- Frontend -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-desktop text-accent"></i> Frontend
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">HTML & CSS</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JavaScript</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors lg:col-span-3">
+                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-toolbox text-accent"></i> Tools & Platforms
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Git</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">GitHub</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">VS Code</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Postman</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Render</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Netlify</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Streamlit Cloud</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section id="projects" class="py-20 px-6 bg-bgCard/30">
+            <div class="max-w-6xl mx-auto reveal">
+                <div class="flex items-center gap-4 mb-12">
+                    <h2 class="text-3xl font-bold text-textMain">Featured Projects</h2>
+                    <div class="h-px bg-bgHover flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Project 1: ApplyFlow -->
+                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">ApplyFlow</h3>
+                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
+                            Students routinely miss placement interviews because recruitment emails get buried in their inbox. ApplyFlow fixes this — it connects to Gmail via OAuth, uses Gemini AI to parse recruitment emails and extract company, role, and interview details, then automatically creates Google Calendar events so nothing slips through. Built with Spring Boot, React, and PostgreSQL, with a Kanban dashboard to track application status end-to-end.
+                        </p>
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Spring Boot</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">React</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Gemini API</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Gmail API</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">PostgreSQL</span>
+                        </div>
+                        <!-- Action Links -->
+                        <div class="flex gap-4 pt-4 border-t border-bgHover">
+                            <a href="https://github.com/keerthana12hv/apply-flow" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-brands fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: PIMS -->
+                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">Placement & Internship Management System (PIMS)</h3>
+                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
+                            A production-style placement platform that simulates how a real college placement cell would work digitally. Built a custom JWT authentication filter from scratch — no default Spring Security form login — to enforce stateless, role-based access across three roles (Student, Company, Admin). Business rules like CGPA checks, application deadlines, and ownership validation are enforced at the service layer, not the controller, keeping the architecture clean. Deployed with Docker on Render with Neon PostgreSQL and a Netlify frontend.
+                        </p>
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Java</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Spring Boot</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">PostgreSQL</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">JWT</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Docker</span>
+                        </div>
+                        <!-- Action Links -->
+                        <div class="flex gap-4 pt-4 border-t border-bgHover">
+                            <a href="https://github.com/keerthana12hv/Placement-And-Internship-Management-System_PIMS" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-brands fa-github"></i> GitHub
+                            </a>
+                            <a href="https://chic-cheesecake-df6cbd.netlify.app/" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: LawGlance -->
+                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">LawGlance – RAG Legal Assistant</h3>
+                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
+                           Indian legal documents are dense and inaccessible to most people. LawGlance makes them queryable in plain English. The pipeline ingests verified legal texts — Consumer Protection Act, IT Act, Fundamental Rights — chunks and embeds them using Sentence Transformers (all-MiniLM-L6-v2), indexes them with FAISS for fast similarity retrieval, and passes the retrieved context to an LLM to generate structured, point-wise answers. Built with Python and Streamlit, deployed on Streamlit Cloud.
+                        </p>
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Python</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">FAISS</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Sentence Transformers</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Groq LLM</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Streamlit</span>
+                        </div>
+
+                        <!-- Action Links -->
+                        <div class="flex gap-4 pt-4 border-t border-bgHover">
+                            <a href="https://github.com/keerthana12hv/LawGlance-RAG-LLM-Legal-Assistant" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-brands fa-github"></i> GitHub
+                            </a>
+                            <a href="https://lawglance-rag-llm-legal-assistant-esl429aphj5bxpfaprgbi8.streamlit.app" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Murf AI -->
+                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">Murf AI Voice Studio</h3>
+                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
+                            An early exploration into integrating third-party AI APIs — combining Murf AI for text-to-speech with multiple voice and accent options, and AssemblyAI for real-time speech-to-text transcription. Features an Echo Bot mode where spoken input is transcribed and played back as an AI voice. Built with FastAPI on the backend and a responsive HTML/CSS/JS frontend, deployed on Render.
+                        </p>
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Python</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">FastAPI</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Murf API</span>
+                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">AssemblyAI</span>
+                        </div>
+
+                        <!-- Action Links -->
+                        <div class="flex gap-4 pt-4 border-t border-bgHover">
+                            <a href="https://github.com/keerthana12hv/Murf-AI-Voice-Studio" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-brands fa-github"></i> GitHub
+                            </a>
+                            <a href="https://murf-ai-voice-tools.onrender.com/" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="py-20 px-6">
+            <div class="max-w-5xl mx-auto reveal">
+                <div class="flex items-center gap-4 mb-12">
+                    <h2 class="text-3xl font-bold text-textMain">Certifications</h2>
+                    <div class="h-px bg-bgHover flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
+                        <div class="w-10 h-10 rounded bg-[#C74634]/10 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-cloud text-[#C74634]"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-textMain text-sm">OCI Generative AI Professional</h4>
+                            <p class="text-xs text-textMuted mt-1">Oracle Cloud Infrastructure</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
+                        <div class="w-10 h-10 rounded bg-[#C74634]/10 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-certificate text-[#C74634]"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-textMain text-sm">OCI AI Foundations Associate</h4>
+                            <p class="text-xs text-textMuted mt-1">Oracle Cloud Infrastructure</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
+                        <div class="w-10 h-10 rounded bg-blue-500/10 flex items-center justify-center shrink-0">
+                            <i class="fa-brands fa-java text-blue-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-textMain text-sm">Java Programming Fundamentals</h4>
+                            <p class="text-xs text-textMuted mt-1">Infosys Springboard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume CTA Section -->
+        <section id="resume" class="py-16 px-6 bg-accent/5 border-y border-bgHover reveal">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-textMain mb-4">Interested in my profile?</h2>
+                <p class="text-textMuted mb-8 max-w-2xl mx-auto">
+                    Take a deeper look at my technical experience, educational background, and project history by reviewing my resume.
+                </p>
+                <div class="flex justify-center gap-4 flex-wrap">
+                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" class="px-8 py-3 bg-accent hover:bg-accentHover text-white font-medium rounded-lg transition-colors duration-300 shadow-lg shadow-accent/20 flex items-center gap-2">
+                        <i class="fa-regular fa-eye"></i> View Resume
+                    </a>
+                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" class="px-8 py-3 bg-bgCard hover:bg-bgHover border border-bgHover text-textMain font-medium rounded-lg transition-colors duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6">
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <p class="text-accent font-medium mb-4">What's Next?</p>
+                <h2 class="text-4xl font-bold text-textMain mb-6">Get In Touch</h2>
+                <p class="text-textMuted leading-relaxed mb-10">
+                    I am currently open to internship and full-time software engineering roles. Whether you have an opportunity, a question, or just want to say hi, my inbox is always open.
+                </p>
+                <a href="mailto:jkeerthana925@gmail.com" class="inline-block px-8 py-4 border border-accent text-accent hover:bg-accent/10 font-medium rounded-lg transition-colors duration-300">
+                    Say Hello
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bgCard border-t border-bgHover py-8 text-center">
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="https://github.com/keerthana12hv" target="_blank" class="text-textMuted hover:text-accent transition-colors text-xl">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/j-keerthana-28469a376" target="_blank" class="text-textMuted hover:text-accent transition-colors text-xl">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:jkeerthana925@gmail.com" class="text-textMuted hover:text-accent transition-colors text-xl">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
+        </div>
+        <p class="text-textMuted text-sm mb-2">© 2026 J Keerthana. All Rights Reserved.</p>
+        <p class="text-textMuted text-xs opacity-60">Built using HTML, Tailwind CSS, JavaScript and deployed using GitHub Pages.</p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Scroll Reveal Animation via Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Reveal only once
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
 </body>
 </html>
