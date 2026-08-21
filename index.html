@@ -1,14 +1,18 @@
+<!-- Chosen Palette: Slate Dark Theme with Cyan & Indigo Accents -->
+<!-- Application Structure Plan: Single-page developer portfolio designed to showcase J Keerthana's backend engineering, Java/Spring Boot experience, and AI projects. Structure: Floating Sticky Nav -> Hero Section with Interactive Code Terminal & Availability Badge -> About Me & Education Card (Highlighting 2027 Graduate Status) -> Categorized Technical Skills Grid with Filter Tabs -> Infosys Springboard Internship Timeline -> Projects Section with Priority Hierarchy (DecisionHub Featured Star, PIMS Full-Stack, LawGlance RAG Assistant, Murf AI Voice Studio) -> Certifications -> Resume CTA -> Contact Section -> Footer. This structure provides immediate technical clarity, deployment visibility, and logical narrative flow for recruiters. -->
+<!-- Visualization & Content Choices: Uses semantic HTML with Tailwind CSS and CSS glassmorphism effects. Features HTML5 Canvas particle effects for the hero section background, FontAwesome font icons (No SVG elements, No Mermaid JS), interactive skill filtering tabs, terminal tab toggling, toast notification for email copying, and custom CSS/HTML architecture flow diagrams for DecisionHub, PIMS, and LawGlance to communicate system designs and deployments visually. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J Keerthana |  Building with Java & AI</title>
+    <title>J Keerthana | Java Backend & Spring Boot Developer</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Tailwind CSS -->
@@ -20,15 +24,23 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
                     },
                     colors: {
-                        bgDark: '#0f172a',    // slate-900
-                        bgCard: '#1e293b',    // slate-800
-                        bgHover: '#334155',   // slate-700
-                        textMain: '#f8fafc',  // slate-50
-                        textMuted: '#94a3b8', // slate-400
-                        accent: '#6366f1',    // indigo-500
-                        accentHover: '#4f46e5'// indigo-600
+                        bgDark: '#0b0f19',
+                        bgCard: '#111827',
+                        bgCardHover: '#1f2937',
+                        borderSubtle: '#1e293b',
+                        borderHover: '#374151',
+                        accentCyan: '#06b6d4',
+                        accentIndigo: '#6366f1',
+                        accentEmerald: '#10b981',
+                        textMain: '#f9fafb',
+                        textMuted: '#9ca3af'
+                    },
+                    boxShadow: {
+                        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.25)',
+                        'glow-indigo': '0 0 25px -5px rgba(99, 102, 241, 0.25)'
                     }
                 }
             }
@@ -37,340 +49,824 @@
 
     <style>
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #0b0f19;
+            color: #f9fafb;
+            font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374151; }
 
-        /* Scroll margin for sticky header offset */
+        /* Scroll margin for sticky header */
         section { scroll-margin-top: 5rem; }
 
-        /* Reveal Animation */
+        /* Scroll Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.6s ease-out;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Subtle Code Background Grid */
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Glowing card border gradient effect */
+        .gradient-border-card {
+            position: relative;
+            background: #111827;
+            border: 1px solid #1e293b;
+        }
+        .gradient-border-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px -5px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Terminal Window Dot styling */
+        .term-dot-red { background-color: #ef4444; }
+        .term-dot-yellow { background-color: #f59e0b; }
+        .term-dot-green { background-color: #10b981; }
+
+        /* Pulse Dot for status */
+        .pulse-emerald {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
     </style>
 </head>
-<body class="selection:bg-accent selection:text-white">
+<body class="selection:bg-accentCyan selection:text-black relative">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-bgDark/80 backdrop-blur-md border-b border-bgHover">
-        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <!-- Scroll Progress Indicator Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-accentCyan to-accentIndigo z-50 transition-all duration-150 w-0"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-40 bg-bgDark/85 backdrop-blur-lg border-b border-borderSubtle transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo/Name -->
-                <a href="#" class="text-xl font-bold tracking-tight text-textMain hover:text-accent transition-colors">
-                    JK<span class="text-accent">.</span>
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center gap-2 group">
+                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-accentCyan to-accentIndigo flex items-center justify-center text-black font-mono font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
+                        JK
+                    </span>
+                    <span class="text-lg font-bold text-textMain tracking-tight">
+                        Keerthana<span class="text-accentCyan">.dev</span>
+                    </span>
                 </a>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-textMuted">
-                    <a href="#about" class="hover:text-textMain transition-colors">About</a>
-                    <a href="#skills" class="hover:text-textMain transition-colors">Skills</a>
-                    <a href="#projects" class="hover:text-textMain transition-colors">Projects</a>
-                    <a href="#certifications" class="hover:text-textMain transition-colors">Certifications</a>
-                    <a href="#resume" class="hover:text-textMain transition-colors">Resume</a>
-                    <a href="#contact" class="hover:text-textMain transition-colors">Contact</a>
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-7 text-sm font-medium text-textMuted">
+                    <a href="#about" class="hover:text-accentCyan transition-colors py-1">About</a>
+                    <a href="#skills" class="hover:text-accentCyan transition-colors py-1">Skills</a>
+                    <a href="#experience" class="hover:text-accentCyan transition-colors py-1">Experience</a>
+                    <a href="#projects" class="hover:text-accentCyan transition-colors py-1">Projects</a>
+                    <a href="#certifications" class="hover:text-accentCyan transition-colors py-1">Certifications</a>
+                    <a href="#resume" class="hover:text-accentCyan transition-colors py-1">Resume</a>
+                    <a href="#contact" class="px-4 py-2 rounded-lg bg-borderSubtle hover:bg-borderHover text-textMain border border-borderSubtle transition-all duration-200">Contact</a>
                 </div>
 
-                <!-- Mobile Menu Button -->
+                <!-- Mobile Hamburger Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-textMuted hover:text-textMain focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                    <button id="mobile-menu-btn" aria-label="Toggle Navigation Menu" class="p-2 rounded-lg bg-bgCard border border-borderSubtle text-textMuted hover:text-textMain focus:outline-none">
+                        <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-bgCard border-b border-bgHover">
-            <div class="px-4 pt-2 pb-6 space-y-2 text-sm font-medium text-textMuted">
-                <a href="#about" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">About</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Skills</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Projects</a>
-                <a href="#certifications" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Certifications</a>
-                <a href="#resume" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Resume</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md hover:bg-bgHover hover:text-textMain mobile-link">Contact</a>
+        <!-- Mobile Dropdown Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bgCard/95 border-b border-borderSubtle backdrop-blur-xl">
+            <div class="px-6 pt-3 pb-6 space-y-3 text-sm font-medium text-textMuted">
+                <a href="#about" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">About</a>
+                <a href="#skills" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">Skills</a>
+                <a href="#experience" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">Experience</a>
+                <a href="#projects" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">Projects</a>
+                <a href="#certifications" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">Certifications</a>
+                <a href="#resume" class="block py-2 px-3 rounded-lg hover:bg-borderSubtle hover:text-textMain mobile-link">Resume</a>
+                <a href="#contact" class="block py-2 px-3 rounded-lg bg-accentCyan/10 text-accentCyan font-semibold mobile-link">Contact Me</a>
             </div>
         </div>
     </nav>
 
-    <main>
+    <main class="relative z-10">
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-12 px-6">
-            <div class="max-w-3xl w-full text-left reveal">
-                <p class="text-accent font-medium mb-4 tracking-wide">Hi, my name is</p>
-                <h2 class="text-5xl md:text-7xl font-bold text-textMain mb-4 tracking-tight">J Keerthana.</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-textMuted mb-8 leading-tight">
-                    Information Science Student<br class="hidden md:block">
-                    <span class="text-2xl md:text-4xl">| Java • Spring Boot • AI Projects</span>
-                </h3>
-                <p class="text-lg text-textMuted max-w-2xl mb-10 leading-relaxed">
-                    Building practical software projects using Java, Spring Boot, SQL, and modern AI technologies while continuously improving software engineering and problem-solving skills.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#projects" class="px-6 py-3 bg-accent hover:bg-accentHover text-white font-medium rounded-lg transition-colors duration-300 shadow-lg shadow-accent/20">
-                        View Projects
-                    </a>
-                    <a href="#contact" class="px-6 py-3 bg-transparent border border-textMuted hover:border-textMain text-textMain font-medium rounded-lg transition-colors duration-300">
-                        Contact Me
-                    </a>
-                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" class="px-6 py-3 bg-transparent border border-textMuted hover:border-textMain text-textMain font-medium rounded-lg transition-colors duration-300 flex items-center gap-2">
-                        <i class="fa-solid fa-file-pdf"></i> Resume
-                    </a>
+        <section id="home" class="min-h-screen relative flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden bg-grid-pattern">
+            <!-- Background Matrix Particles Canvas -->
+            <canvas id="hero-canvas" class="absolute inset-0 pointer-events-none opacity-30 z-0"></canvas>
+            
+            <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+                
+                <!-- Left Column: Hero Bio & CTA -->
+                <div class="lg:col-span-7 space-y-6 text-left reveal">
+                    
+                    <!-- Availability Badge -->
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-accentEmerald/10 border border-accentEmerald/20 text-accentEmerald text-xs font-medium">
+                        <span class="w-2 h-2 rounded-full bg-accentEmerald pulse-emerald"></span>
+                        Open to Software Engineering Roles | 2027 Graduate
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-accentCyan font-mono text-sm tracking-wide">Hi, my name is</p>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold text-textMain tracking-tight">
+                            J Keerthana.
+                        </h1>
+                        <h2 class="text-2xl sm:text-4xl font-bold text-textMuted flex items-center gap-2">
+                            <span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-accentCyan to-accentIndigo font-mono"></span><span class="animate-pulse text-accentCyan">|</span>
+                        </h2>
+                    </div>
+
+                    <p class="text-base sm:text-lg text-textMuted leading-relaxed max-w-2xl">
+                        Information Science & Engineering student at Bangalore Institute of Technology, focused on backend development with Java and Spring Boot, databases, and practical AI applications.
+                    </p>
+
+                    <!-- Primary Stack Badges -->
+                    <div class="pt-2">
+                        <p class="text-xs uppercase tracking-wider text-textMuted font-mono mb-3">Primary Stack</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-bgCard border border-borderSubtle text-textMain text-xs font-mono flex items-center gap-2 hover:border-accentCyan/50 transition-colors">
+                                <i class="fa-brands fa-java text-orange-400"></i> Java
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-bgCard border border-borderSubtle text-textMain text-xs font-mono flex items-center gap-2 hover:border-accentCyan/50 transition-colors">
+                                <i class="fa-solid fa-leaf text-accentEmerald"></i> Spring Boot
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-bgCard border border-borderSubtle text-textMain text-xs font-mono flex items-center gap-2 hover:border-accentCyan/50 transition-colors">
+                                <i class="fa-solid fa-database text-blue-400"></i> PostgreSQL
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-bgCard border border-borderSubtle text-textMain text-xs font-mono flex items-center gap-2 hover:border-accentCyan/50 transition-colors">
+                                <i class="fa-solid fa-brain text-accentIndigo"></i> RAG & LLMs
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Actions -->
+                    <div class="flex flex-wrap items-center gap-4 pt-4">
+                        <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-accentCyan to-accentIndigo text-black font-semibold text-sm hover:opacity-95 transition-all shadow-glow-cyan flex items-center gap-2 group">
+                            Explore Featured Projects
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#experience" class="px-6 py-3.5 rounded-xl bg-bgCard border border-borderSubtle hover:border-borderHover text-textMain font-medium text-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-briefcase text-accentCyan"></i> Experience
+                        </a>
+                        <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="px-4 py-3.5 rounded-xl bg-bgCard border border-borderSubtle hover:border-borderHover text-textMuted hover:text-textMain font-medium text-sm transition-all flex items-center gap-2" title="View Resume PDF">
+                            <i class="fa-solid fa-file-pdf text-red-400"></i> Resume
+                        </a>
+                    </div>
+
+                    <!-- Social Fast Links -->
+                    <div class="flex items-center gap-5 pt-2 text-textMuted text-lg">
+                        <a href="https://github.com/keerthana12hv" target="_blank" rel="noopener noreferrer" class="hover:text-accentCyan transition-colors" title="GitHub Profile">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/j-keerthana-28469a376" target="_blank" rel="noopener noreferrer" class="hover:text-accentCyan transition-colors" title="LinkedIn Profile">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="mailto:jkeerthana925@gmail.com" class="hover:text-accentCyan transition-colors" title="Send Email">
+                            <i class="fa-regular fa-envelope"></i>
+                        </a>
+                    </div>
+
                 </div>
+
+                <!-- Right Column: Interactive Code Terminal Card -->
+                <div class="lg:col-span-5 reveal">
+                    <div class="rounded-2xl bg-bgCard border border-borderSubtle shadow-2xl overflow-hidden font-mono text-xs text-textMuted hover:border-borderHover transition-all">
+                        
+                        <!-- Terminal Top Header Bar -->
+                        <div class="px-4 py-3 bg-borderSubtle/60 border-b border-borderSubtle flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full term-dot-red inline-block"></span>
+                                <span class="w-3 h-3 rounded-full term-dot-yellow inline-block"></span>
+                                <span class="w-3 h-3 rounded-full term-dot-green inline-block"></span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="tab-java-btn" onclick="switchTermTab('java')" class="px-2.5 py-1 rounded bg-bgCard text-accentCyan border border-borderSubtle font-medium">Keerthana.java</button>
+                                <button id="tab-json-btn" onclick="switchTermTab('json')" class="px-2.5 py-1 rounded text-textMuted hover:text-textMain font-medium">profile.json</button>
+                            </div>
+                        </div>
+
+                        <!-- Terminal Code View 1: Java Class -->
+                        <div id="term-view-java" class="p-5 space-y-2 leading-relaxed bg-[#0a0e17]">
+                            <p><span class="text-accentIndigo">public class</span> <span class="text-accentCyan">DeveloperProfile</span> {</p>
+                            <p class="pl-4"><span class="text-accentIndigo">private final String</span> name = <span class="text-accentEmerald">"J Keerthana"</span>;</p>
+                            <p class="pl-4"><span class="text-accentIndigo">private final String</span> degree = <span class="text-accentEmerald">"BE Information Science & Engineering"</span>;</p>
+                            <p class="pl-4"><span class="text-accentIndigo">private final String</span> college = <span class="text-accentEmerald">"Bangalore Institute of Technology"</span>;</p>
+                            <p class="pl-4"><span class="text-accentIndigo">private final double</span> cgpa = <span class="text-orange-400">8.41</span>;</p>
+                            <p class="pl-4"><span class="text-accentIndigo">private final String[]</span> coreStack = {<span class="text-accentEmerald">"Java"</span>, <span class="text-accentEmerald">"Spring Boot"</span>, <span class="text-accentEmerald">"PostgreSQL"</span>};</p>
+                            <br>
+                            <p class="pl-4"><span class="text-accentIndigo">public String</span> <span class="text-blue-400">getCurrentRole</span>() {</p>
+                            <p class="pl-8"><span class="text-accentIndigo">return</span> <span class="text-accentEmerald">"BE ISE | 2027 Graduate"</span>;</p>
+                            <p class="pl-4">}</p>
+                            <p>}</p>
+                        </div>
+
+                        <!-- Terminal Code View 2: JSON Specs -->
+                        <div id="term-view-json" class="p-5 space-y-1 leading-relaxed bg-[#0a0e17] hidden">
+                            <p>{</p>
+                            <p class="pl-4"><span class="text-accentCyan">"internshipCompleted"</span>: <span class="text-accentEmerald">"Infosys Springboard Virtual Internship 7.0"</span>,</p>
+                            <p class="pl-4"><span class="text-accentCyan">"internshipPeriod"</span>: <span class="text-accentEmerald">"June 28, 2026 – August 20, 2026"</span>,</p>
+                            <p class="pl-4"><span class="text-accentCyan">"teamSize"</span>: <span class="text-orange-400">10</span>,</p>
+                            <p class="pl-4"><span class="text-accentCyan">"flagshipProject"</span>: <span class="text-accentEmerald">"DecisionHub"</span>,</p>
+                            <p class="pl-4"><span class="text-accentCyan">"architecture"</span>: [<span class="text-accentEmerald">"Java REST APIs"</span>, <span class="text-accentEmerald">"Spring Boot"</span>, <span class="text-accentEmerald">"PostgreSQL"</span>],</p>
+                            <p class="pl-4"><span class="text-accentCyan">"graduationYear"</span>: <span class="text-orange-400">2027</span></p>
+                            <p>}</p>
+                        </div>
+
+                        <!-- Terminal Footer Bar -->
+                        <div class="px-4 py-2 bg-borderSubtle/40 border-t border-borderSubtle flex items-center justify-between text-[11px] text-textMuted">
+                            <span><i class="fa-solid fa-code-branch text-accentCyan mr-1"></i> main*</span>
+                            <span class="text-accentEmerald"><i class="fa-solid fa-check-circle mr-1"></i> Build Success (0 errors)</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 px-6 bg-bgCard/30">
-            <div class="max-w-4xl mx-auto reveal">
-                <div class="flex items-center gap-4 mb-10">
-                    <h2 class="text-3xl font-bold text-textMain">About Me</h2>
-                    <div class="h-px bg-bgHover flex-grow"></div>
-                </div>
+        <section id="about" class="py-20 px-6 bg-bgCard/40 relative">
+            <div class="max-w-6xl mx-auto space-y-12 reveal">
                 
-                <div class="text-textMuted leading-relaxed space-y-6 text-lg">
-                    <p>
-                        I am an Information Science student at Bangalore Institute of Technology with an interest in backend development, full-stack applications, and AI-powered software solutions.
-                    </p>
-                    <p>
-                        I enjoy building practical projects using Java, Spring Boot, SQL, and modern AI technologies. My academic journey and project experiences have allowed me to continuously improve my problem-solving abilities and software engineering skills, preparing me for impactful roles in the tech industry.
-                    </p>
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-textMain tracking-tight flex items-center gap-3">
+                        <span class="text-accentCyan font-mono text-xl">01.</span> About Me
+                    </h2>
+                    <div class="h-px bg-borderSubtle flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
-                    <div class="mt-8 p-6 border border-bgHover rounded-xl bg-bgCard/50 inline-block">
-                        <h3 class="text-textMain font-semibold mb-2"><i class="fa-solid fa-graduation-cap text-accent mr-2"></i>Education</h3>
-                        <p class="text-sm font-bold">Bachelor of Engineering (Information Science & Engineering) | 2023 - 2027</p>
-                        <p class="text-sm">Bangalore Institute of Technology, Bangalore</p>
-                        <p class="text-sm font-medium text-accent mt-2">Current CGPA: 8.47 / 10</p>
+                    <!-- Bio Content -->
+                    <div class="lg:col-span-7 space-y-5 text-textMuted leading-relaxed text-base">
+                        <p>
+                            I am a 4th-year Information Science & Engineering student at <strong class="text-textMain font-medium">Bangalore Institute of Technology</strong> with a strong foundation in object-oriented programming, backend software development, and practical AI application development.
+                        </p>
+                        <p>
+                            During my <strong class="text-textMain font-medium">Infosys Springboard Virtual Internship</strong>, I gained hands-on software development experience working in a 10-member collaborative team. I contributed to backend REST API development using Java and Spring Boot, while using Git and GitHub for feature-branch collaboration and team code integration.
+                        </p>
+                        <p>
+                            I enjoy solving engineering problems—whether designing clean PostgreSQL database schemas, implementing secure JWT authentication, or building practical RAG pipelines with FAISS and modern LLMs.
+                        </p>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 px-6">
-            <div class="max-w-5xl mx-auto reveal">
-                <div class="flex items-center gap-4 mb-12">
-                    <h2 class="text-3xl font-bold text-textMain">Technical Skills</h2>
-                    <div class="h-px bg-bgHover flex-grow"></div>
-                </div>
+                    <!-- Education Card & Quick Stats -->
+                    <div class="lg:col-span-5 space-y-4">
+                        
+                        <!-- Education Card - Highlighting 2027 Graduate Status -->
+                        <div class="gradient-border-card p-6 rounded-2xl space-y-4 relative overflow-hidden">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-textMain font-semibold text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-graduation-cap text-accentCyan"></i> Education
+                                </h3>
+                                <span class="px-3 py-1 rounded-full bg-accentIndigo/20 text-accentIndigo border border-accentIndigo/30 font-mono text-xs font-bold">
+                                    2027 Graduate
+                                </span>
+                            </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Languages -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-code text-accent"></i> Languages
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Java</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Python</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">SQL</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JavaScript</span>
+                            <div class="space-y-1">
+                                <p class="text-textMain font-medium text-sm sm:text-base">B.E. in Information Science & Engineering</p>
+                                <p class="text-xs text-textMuted">Bangalore Institute of Technology, Bangalore</p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-bgDark/80 border border-borderSubtle flex items-center justify-between">
+                                <div>
+                                    <span class="text-[11px] uppercase font-mono tracking-wider text-textMuted block">Period</span>
+                                    <span class="text-sm font-bold text-accentCyan font-mono">2023 – 2027</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[11px] uppercase font-mono tracking-wider text-textMuted block">Current CGPA</span>
+                                    <span class="text-sm font-bold text-accentEmerald font-mono">8.41 / 10</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Summary Metrics -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-4 rounded-xl bg-bgCard border border-borderSubtle text-center hover:border-accentCyan/40 transition-colors">
+                                <div class="text-2xl font-bold text-accentCyan font-mono">10-Member</div>
+                                <div class="text-xs text-textMuted mt-1">Internship Team</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-bgCard border border-borderSubtle text-center hover:border-accentIndigo/40 transition-colors">
+                                <div class="text-2xl font-bold text-accentIndigo font-mono">4</div>
+                                <div class="text-xs text-textMuted mt-1">Key Projects</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Backend -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-server text-accent"></i> Backend
-                        </h3>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Technical Skills Section -->
+        <section id="skills" class="py-20 px-6 relative">
+            <div class="max-w-6xl mx-auto space-y-10 reveal">
+                
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-textMain tracking-tight flex items-center gap-3">
+                        <span class="text-accentCyan font-mono text-xl">02.</span> Technical Skills
+                    </h2>
+                    <div class="h-px bg-borderSubtle flex-grow"></div>
+                </div>
+
+                <!-- Skill Filter Tabs -->
+                <div class="flex flex-wrap gap-2 border-b border-borderSubtle pb-4">
+                    <button onclick="filterSkills('all')" class="skill-tab-btn px-4 py-2 rounded-lg bg-accentCyan text-black font-semibold text-xs transition-all" data-category="all">All Skills</button>
+                    <button onclick="filterSkills('backend')" class="skill-tab-btn px-4 py-2 rounded-lg bg-bgCard text-textMuted hover:text-textMain font-medium text-xs border border-borderSubtle transition-all" data-category="backend">Backend & Core</button>
+                    <button onclick="filterSkills('testing')" class="skill-tab-btn px-4 py-2 rounded-lg bg-bgCard text-textMuted hover:text-textMain font-medium text-xs border border-borderSubtle transition-all" data-category="testing">Testing</button>
+                    <button onclick="filterSkills('ai')" class="skill-tab-btn px-4 py-2 rounded-lg bg-bgCard text-textMuted hover:text-textMain font-medium text-xs border border-borderSubtle transition-all" data-category="ai">AI & GenAI</button>
+                    <button onclick="filterSkills('tools')" class="skill-tab-btn px-4 py-2 rounded-lg bg-bgCard text-textMuted hover:text-textMain font-medium text-xs border border-borderSubtle transition-all" data-category="tools">Databases & Tools</button>
+                </div>
+
+                <!-- Skill Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-grid">
+                    
+                    <!-- Languages -->
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="backend">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">Languages</h3>
+                        </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Spring Boot</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">REST APIs</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JPA / Hibernate</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JWT Auth</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium flex items-center gap-1.5"><i class="fa-brands fa-java text-orange-400"></i> Java</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium flex items-center gap-1.5"><i class="fa-brands fa-python text-blue-400"></i> Python</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium flex items-center gap-1.5"><i class="fa-solid fa-database text-accentCyan"></i> SQL</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium flex items-center gap-1.5"><i class="fa-brands fa-js text-yellow-400"></i> JavaScript</span>
+                        </div>
+                    </div>
+
+                    <!-- Backend Frameworks -->
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="backend">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-accentEmerald/10 text-accentEmerald flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">Backend & Frameworks</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Spring Boot</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">REST APIs</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">JPA / Hibernate</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">JWT Authentication</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">FastAPI</span>
+                        </div>
+                    </div>
+
+                    <!-- Testing -->
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="testing">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-vial"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">Testing</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">JUnit</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Mockito</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Unit Testing</span>
                         </div>
                     </div>
 
                     <!-- Databases -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-database text-accent"></i> Databases
-                        </h3>
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="tools">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">Databases</h3>
+                        </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">PostgreSQL</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">MySQL</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">PostgreSQL</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">MySQL</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Relational Schema Design</span>
                         </div>
                     </div>
 
-                    <!-- AI & GenAI -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors lg:col-span-2">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-brain text-accent"></i> AI & Generative AI
-                        </h3>
+                    <!-- AI & Generative AI -->
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="ai">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-accentIndigo/10 text-accentIndigo flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">AI & Generative AI</h3>
+                        </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">RAG Systems</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">FAISS</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Sentence Transformers</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">LLM Integration</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">RAG Pipelines</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">FAISS Vector Search</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Sentence Transformers</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Groq LLM Integration</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Speech API Integrations</span>
                         </div>
                     </div>
 
-                    <!-- Frontend -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-desktop text-accent"></i> Frontend
-                        </h3>
+                    <!-- Tools & Deployment -->
+                    <div class="skill-card bg-bgCard border border-borderSubtle p-6 rounded-2xl hover:border-accentCyan/50 transition-all space-y-4" data-category="tools">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-toolbox"></i>
+                            </div>
+                            <h3 class="font-bold text-textMain text-base">Tools & Deployment</h3>
+                        </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">HTML & CSS</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">JavaScript</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Git</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">GitHub</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Feature Branching</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Docker</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Postman</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Netlify</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Render</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-borderSubtle/60 text-textMain text-xs font-medium">Streamlit Cloud</span>
                         </div>
                     </div>
 
-                    <!-- Tools -->
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl hover:border-accent/50 transition-colors lg:col-span-3">
-                        <h3 class="text-lg font-semibold text-textMain mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-toolbox text-accent"></i> Tools & Platforms
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Git</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">GitHub</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">VS Code</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Postman</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Render</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Netlify</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1 text-sm rounded-full">Streamlit Cloud</span>
-                        </div>
-                    </div>
                 </div>
+
+            </div>
+        </section>
+
+        <!-- Experience Timeline Section -->
+        <section id="experience" class="py-20 px-6 bg-bgCard/30 relative">
+            <div class="max-w-5xl mx-auto space-y-12 reveal">
+                
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-textMain tracking-tight flex items-center gap-3">
+                        <span class="text-accentCyan font-mono text-xl">03.</span> Experience
+                    </h2>
+                    <div class="h-px bg-borderSubtle flex-grow"></div>
+                </div>
+
+                <!-- Timeline Layout -->
+                <div class="relative pl-6 sm:pl-8 border-l-2 border-borderSubtle space-y-10">
+                    
+                    <!-- Timeline Item: Infosys Springboard Internship -->
+                    <div class="relative group">
+                        
+                        <!-- Node Dot -->
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-accentCyan border-4 border-bgDark group-hover:scale-125 transition-transform"></div>
+
+                        <div class="gradient-border-card p-6 sm:p-8 rounded-2xl space-y-4">
+                            
+                            <div class="flex flex-wrap items-start justify-between gap-3 border-b border-borderSubtle pb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-textMain">Software Engineering Intern</h3>
+                                    <p class="text-accentCyan font-medium text-sm mt-0.5">Infosys Springboard Virtual Internship 7.0</p>
+                                </div>
+                                <div class="px-3 py-1 rounded-full bg-borderSubtle text-textMuted font-mono text-xs border border-borderSubtle">
+                                    June 28, 2026 – August 20, 2026
+                                </div>
+                            </div>
+
+                            <ul class="space-y-2.5 text-textMuted text-sm leading-relaxed list-disc list-inside">
+                                <li>Contributed to the development of <strong class="text-textMain font-medium">DecisionHub</strong>, a full-stack decision support and community polling platform.</li>
+                                <li>Contributed to backend REST API development and database-related tasks for DecisionHub using Java, Spring Boot, and PostgreSQL.</li>
+                                <li>Used Git and GitHub feature branches for collaborative development, code integration, and coordination across a shared codebase.</li>
+                            </ul>
+
+                            <div class="pt-2 flex flex-wrap gap-2 items-center justify-between">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2.5 py-1 rounded-md bg-borderSubtle/60 text-textMuted text-xs font-mono">Java</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-borderSubtle/60 text-textMuted text-xs font-mono">Spring Boot</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-borderSubtle/60 text-textMuted text-xs font-mono">PostgreSQL</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-borderSubtle/60 text-textMuted text-xs font-mono">Git Workflows</span>
+                                </div>
+                                <a href="#decisionhub-card" class="text-xs text-accentCyan hover:underline font-medium inline-flex items-center gap-1">
+                                    View DecisionHub Project <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </section>
 
         <!-- Featured Projects Section -->
-        <section id="projects" class="py-20 px-6 bg-bgCard/30">
-            <div class="max-w-6xl mx-auto reveal">
-                <div class="flex items-center gap-4 mb-12">
-                    <h2 class="text-3xl font-bold text-textMain">Featured Projects</h2>
-                    <div class="h-px bg-bgHover flex-grow"></div>
+        <section id="projects" class="py-20 px-6 relative">
+            <div class="max-w-6xl mx-auto space-y-12 reveal">
+                
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 flex-grow">
+                        <h2 class="text-2xl sm:text-3xl font-bold text-textMain tracking-tight flex items-center gap-3">
+                            <span class="text-accentCyan font-mono text-xl">04.</span> Projects
+                        </h2>
+                        <div class="h-px bg-borderSubtle flex-grow"></div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- PROJECT 1: FEATURED STAR PROJECT - DecisionHub -->
+                <div id="decisionhub-card" class="rounded-3xl bg-gradient-to-br from-bgCard via-bgCard to-[#151c2e] border-2 border-accentCyan/40 p-6 sm:p-10 shadow-glow-cyan relative overflow-hidden transition-all">
                     
-                    <!-- Project 1: ApplyFlow -->
-                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
-                                <i class="fa-solid fa-network-wired"></i>
-                            </div>
+                    <!-- Top Badges -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 rounded-full bg-accentCyan/20 text-accentCyan text-xs font-bold uppercase tracking-wider border border-accentCyan/30">
+                                <i class="fa-solid fa-star mr-1"></i> Featured Internship Project
+                            </span>
+                            <span class="px-3 py-1 rounded-full bg-accentIndigo/20 text-accentIndigo text-xs font-medium border border-accentIndigo/30">
+                                <i class="fa-solid fa-users mr-1"></i> 10-Member Team
+                            </span>
                         </div>
-                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">ApplyFlow</h3>
-                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
-                            Students routinely miss placement interviews because recruitment emails get buried in their inbox. ApplyFlow fixes this — it connects to Gmail via OAuth, uses Gemini AI to parse recruitment emails and extract company, role, and interview details, then automatically creates Google Calendar events so nothing slips through. Built with Spring Boot, React, and PostgreSQL, with a Kanban dashboard to track application status end-to-end.
-                        </p>
-                        <!-- Tech Stack -->
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Spring Boot</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">React</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Gemini API</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Gmail API</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">PostgreSQL</span>
-                        </div>
-                        <!-- Action Links -->
-                        <div class="flex gap-4 pt-4 border-t border-bgHover">
-                            <a href="https://github.com/keerthana12hv/apply-flow" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
-                                <i class="fa-brands fa-github"></i> GitHub
-                            </a>
-                        </div>
+                        <span class="text-xs font-mono text-textMuted">Jun 28 – Aug 20, 2026</span>
                     </div>
 
-                    <!-- Project 2: PIMS -->
-                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
-                                <i class="fa-solid fa-graduation-cap"></i>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Details -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-textMain">DecisionHub</h3>
+                            
+                            <p class="text-textMuted text-sm sm:text-base leading-relaxed">
+                                DecisionHub is a full-stack decision support and community polling platform developed during the Infosys Springboard Virtual Internship. It helps users evaluate decisions through structured options, community input, and polling workflows.
+                            </p>
+
+                            <p class="text-textMuted text-xs sm:text-sm leading-relaxed">
+                                Built and integrated backend REST API services using Java, Spring Boot, and PostgreSQL within a 10-member collaborative development team. Used feature-branch Git workflows and collaborative code integration.
+                            </p>
+
+                            <!-- Development Stack -->
+                            <div class="pt-2">
+                                <span class="text-xs uppercase font-mono text-textMuted block mb-2">Development Stack</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 rounded-lg bg-borderSubtle text-textMain text-xs font-mono">Java</span>
+                                    <span class="px-3 py-1 rounded-lg bg-borderSubtle text-textMain text-xs font-mono">Spring Boot</span>
+                                    <span class="px-3 py-1 rounded-lg bg-borderSubtle text-textMain text-xs font-mono">PostgreSQL</span>
+                                    <span class="px-3 py-1 rounded-lg bg-borderSubtle text-textMain text-xs font-mono">REST APIs</span>
+                                    <span class="px-3 py-1 rounded-lg bg-borderSubtle text-textMain text-xs font-mono">Git Workflows</span>
+                                </div>
+                            </div>
+
+                            <!-- Links & Actions -->
+                            <div class="flex items-center gap-4 pt-4 border-t border-borderSubtle">
+                                <a href="https://github.com/keerthana12hv/DecisionHub" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-accentCyan text-black font-semibold text-xs hover:bg-accentCyan/90 transition-all flex items-center gap-2">
+                                    <i class="fa-brands fa-github text-sm"></i> GitHub
+                                </a>
+                                <a href="https://decisionhub-app.netlify.app/login" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-bgCard hover:bg-borderSubtle text-textMain border border-borderSubtle font-semibold text-xs transition-all flex items-center gap-2">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-accentCyan"></i> Live Demo
+                                </a>
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">Placement & Internship Management System (PIMS)</h3>
-                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
-                            A production-style placement platform that simulates how a real college placement cell would work digitally. Built a custom JWT authentication filter from scratch — no default Spring Security form login — to enforce stateless, role-based access across three roles (Student, Company, Admin). Business rules like CGPA checks, application deadlines, and ownership validation are enforced at the service layer, not the controller, keeping the architecture clean. Deployed with Docker on Render with Neon PostgreSQL and a Netlify frontend.
-                        </p>
-                        <!-- Tech Stack -->
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Java</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Spring Boot</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">PostgreSQL</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">JWT</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Docker</span>
+
+                        <!-- Refined Architecture Visual Block -->
+                        <div class="lg:col-span-5">
+                            <div class="p-6 rounded-2xl bg-bgDark/90 border border-borderSubtle space-y-4 font-mono text-xs">
+                                
+                                <div class="flex items-center justify-between text-textMuted text-[11px] pb-2 border-b border-borderSubtle">
+                                    <span class="text-textMain font-semibold">DecisionHub Architecture</span>
+                                    <span class="text-accentEmerald"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Live</span>
+                                </div>
+
+                                <!-- Functional Concept Flow -->
+                                <div class="space-y-2 text-center">
+                                    <div class="p-2.5 rounded-xl bg-bgCard border border-borderSubtle text-accentCyan">
+                                        Create Decisions / Polls
+                                    </div>
+                                    <div class="text-textMuted text-[10px]"><i class="fa-solid fa-arrow-down text-accentCyan"></i> Community Input</div>
+                                    <div class="p-2.5 rounded-xl bg-bgCard border border-accentCyan/40 text-textMain font-semibold">
+                                        Spring Boot REST APIs
+                                    </div>
+                                    <div class="text-textMuted text-[10px]"><i class="fa-solid fa-arrow-down text-blue-400"></i> Data Persistence</div>
+                                    <div class="p-2.5 rounded-xl bg-bgCard border border-borderSubtle text-blue-400">
+                                        PostgreSQL
+                                    </div>
+                                </div>
+
+                                <!-- Deployment Information Visual -->
+                                <div class="pt-3 border-t border-borderSubtle space-y-1.5 text-[11px]">
+                                    <div class="text-[10px] uppercase font-mono text-textMuted font-semibold">Deployment</div>
+                                    <div class="flex justify-between items-center bg-bgCard p-2 rounded-lg border border-borderSubtle/60">
+                                        <span class="text-textMuted">Frontend</span>
+                                        <span class="text-accentCyan font-medium">React · Netlify</span>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-bgCard p-2 rounded-lg border border-borderSubtle/60">
+                                        <span class="text-textMuted">Backend API</span>
+                                        <span class="text-accentIndigo font-medium">Spring Boot · Render</span>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-bgCard p-2 rounded-lg border border-borderSubtle/60">
+                                        <span class="text-textMuted">Database</span>
+                                        <span class="text-blue-400 font-medium">PostgreSQL</span>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                        <!-- Action Links -->
-                        <div class="flex gap-4 pt-4 border-t border-bgHover">
-                            <a href="https://github.com/keerthana12hv/Placement-And-Internship-Management-System_PIMS" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+
+                    </div>
+
+                </div>
+
+                <!-- SECONDARY PROJECTS GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    
+                    <!-- PROJECT 2: PIMS -->
+                    <div class="gradient-border-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between h-full group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-accentIndigo/10 text-accentIndigo flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <span class="text-xs font-mono text-textMuted">Full-Stack System</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-textMain group-hover:text-accentCyan transition-colors">
+                                Placement & Internship Management System (PIMS)
+                            </h3>
+
+                            <p class="text-textMuted text-xs leading-relaxed">
+                                A digital campus placement platform with Student, Company, and Admin modules. Features stateless JWT authentication, role-based access control (RBAC), CGPA eligibility evaluation, and application deadline validation directly in Spring Boot service layers.
+                            </p>
+
+                            <!-- PIMS Architecture Flow Diagram -->
+                            <div class="p-4 rounded-xl bg-bgDark/90 border border-borderSubtle font-mono text-[11px] space-y-2">
+                                <div class="text-[10px] text-textMuted uppercase tracking-wider font-semibold border-b border-borderSubtle/60 pb-1 flex justify-between">
+                                    <span>System Architecture</span>
+                                    <span class="text-accentCyan">JWT + RBAC</span>
+                                </div>
+                                <div class="space-y-1 text-center text-[10px] pt-1">
+                                    <div class="p-1.5 rounded bg-bgCard border border-borderSubtle text-textMuted">
+                                        Student / Company / Admin Modules
+                                    </div>
+                                    <div class="text-accentCyan text-[9px]"><i class="fa-solid fa-arrow-down"></i> User Interface</div>
+                                    <div class="p-1.5 rounded bg-bgCard border border-accentCyan/30 text-textMain">
+                                        Spring Boot REST API (JWT & Validation)
+                                    </div>
+                                    <div class="text-blue-400 text-[9px]"><i class="fa-solid fa-arrow-down"></i> SQL Persistence</div>
+                                    <div class="p-1.5 rounded bg-bgCard border border-borderSubtle text-blue-400">
+                                        PostgreSQL Database
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PIMS Deployment Badges -->
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-[10px] font-mono text-textMuted">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-accentCyan">Netlify → Frontend</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-accentIndigo">Render → API</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-blue-400">Neon → Postgres</span>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Java</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Spring Boot</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">PostgreSQL</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">JWT</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Docker</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 pt-5 mt-5 border-t border-borderSubtle">
+                            <a href="https://github.com/keerthana12hv/Placement-And-Internship-Management-System_PIMS" target="_blank" rel="noopener noreferrer" class="text-xs text-textMain hover:text-accentCyan font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-brands fa-github"></i> GitHub
                             </a>
-                            <a href="https://chic-cheesecake-df6cbd.netlify.app/" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                            <a href="https://chic-cheesecake-df6cbd.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-xs text-accentCyan hover:underline font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
                             </a>
                         </div>
                     </div>
 
-                    <!-- Project 3: LawGlance -->
-                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
-                                <i class="fa-solid fa-scale-balanced"></i>
+                    <!-- PROJECT 3: LawGlance -->
+                    <div class="gradient-border-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between h-full group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-accentCyan/10 text-accentCyan flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                                <span class="text-xs font-mono text-textMuted">RAG / GenAI</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-textMain group-hover:text-accentCyan transition-colors">
+                                LawGlance – RAG Legal Assistant
+                            </h3>
+
+                            <p class="text-textMuted text-xs leading-relaxed">
+                                An AI-powered legal query assistant for plain-English questions on Indian law. Legal documents are chunked and embedded using Sentence Transformers, indexed with FAISS for semantic retrieval, and combined with a Groq LLM to generate context-grounded responses.
+                            </p>
+
+                            <!-- LawGlance RAG Flow Diagram -->
+                            <div class="p-4 rounded-xl bg-bgDark/90 border border-borderSubtle font-mono text-[11px] space-y-2">
+                                <div class="text-[10px] text-textMuted uppercase tracking-wider font-semibold border-b border-borderSubtle/60 pb-1 flex justify-between">
+                                    <span>RAG Pipeline</span>
+                                    <span class="text-accentEmerald">FAISS + Groq</span>
+                                </div>
+                                <div class="space-y-1.5 text-[10px] pt-1">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-circle-question text-accentCyan text-[9px]"></i>
+                                        <span class="text-textMuted">User Question</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 pl-2 border-l border-borderSubtle">
+                                        <i class="fa-solid fa-arrow-down text-[8px] text-textMuted"></i>
+                                        <span class="text-accentCyan">Sentence Transformer Embeddings</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 pl-2 border-l border-borderSubtle">
+                                        <i class="fa-solid fa-arrow-down text-[8px] text-textMuted"></i>
+                                        <span class="text-accentIndigo">FAISS Vector Search & Context Retrieval</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 pl-2 border-l border-borderSubtle">
+                                        <i class="fa-solid fa-arrow-down text-[8px] text-textMuted"></i>
+                                        <span class="text-textMain">Groq LLM Synthesis</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check-circle text-accentEmerald text-[9px]"></i>
+                                        <span class="text-accentEmerald font-semibold">Context-Aware Answer</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LawGlance Deployment & Tech Stack -->
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-[10px] font-mono text-textMuted">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-accentEmerald">Deployment: Streamlit Cloud</span>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Python</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">FAISS</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Sentence Transformers</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Groq LLM</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Streamlit</span>
+                                </div>
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">LawGlance – RAG Legal Assistant</h3>
-                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
-                           Indian legal documents are dense and inaccessible to most people. LawGlance makes them queryable in plain English. The pipeline ingests verified legal texts — Consumer Protection Act, IT Act, Fundamental Rights — chunks and embeds them using Sentence Transformers (all-MiniLM-L6-v2), indexes them with FAISS for fast similarity retrieval, and passes the retrieved context to an LLM to generate structured, point-wise answers. Built with Python and Streamlit, deployed on Streamlit Cloud.
-                        </p>
-                        <!-- Tech Stack -->
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Python</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">FAISS</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Sentence Transformers</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Groq LLM</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Streamlit</span>
-                        </div>
 
-                        <!-- Action Links -->
-                        <div class="flex gap-4 pt-4 border-t border-bgHover">
-                            <a href="https://github.com/keerthana12hv/LawGlance-RAG-LLM-Legal-Assistant" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                        <div class="flex items-center gap-4 pt-5 mt-5 border-t border-borderSubtle">
+                            <a href="https://github.com/keerthana12hv/LawGlance-RAG-LLM-Legal-Assistant" target="_blank" rel="noopener noreferrer" class="text-xs text-textMain hover:text-accentCyan font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-brands fa-github"></i> GitHub
                             </a>
-                            <a href="https://lawglance-rag-llm-legal-assistant-esl429aphj5bxpfaprgbi8.streamlit.app" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                            <a href="https://lawglance-rag-llm-legal-assistant-esl429aphj5bxpfaprgbi8.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-xs text-accentCyan hover:underline font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
                             </a>
                         </div>
                     </div>
 
-                    <!-- Project 4: Murf AI -->
-                    <div class="bg-bgCard border border-bgHover rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full group">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent text-2xl">
-                                <i class="fa-solid fa-microphone-lines"></i>
+                    <!-- PROJECT 4: Murf AI Voice Studio -->
+                    <div class="gradient-border-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between h-full group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-microphone-lines"></i>
+                                </div>
+                                <span class="text-xs font-mono text-textMuted">Speech AI</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-textMain group-hover:text-accentCyan transition-colors">
+                                Murf AI Voice Studio
+                            </h3>
+
+                            <p class="text-textMuted text-xs leading-relaxed">
+                                An integration web application connecting AI speech APIs. Integrates Murf AI for customizable text-to-speech rendering and AssemblyAI for real-time speech-to-text transcription, featuring an Echo Bot mode to re-synthesize spoken input into selected voice personas.
+                            </p>
+
+                            <!-- Murf AI Integration Features -->
+                            <div class="p-4 rounded-xl bg-bgDark/90 border border-borderSubtle font-mono text-[11px] space-y-2">
+                                <div class="text-[10px] text-textMuted uppercase tracking-wider font-semibold border-b border-borderSubtle/60 pb-1">
+                                    API Capabilities
+                                </div>
+                                <div class="space-y-1.5 text-[10px] text-textMuted">
+                                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-accentCyan text-[9px]"></i> Text-to-Speech (Murf API)</div>
+                                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-accentCyan text-[9px]"></i> Speech-to-Text (AssemblyAI)</div>
+                                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-accentCyan text-[9px]"></i> Echo Bot Persona Switching</div>
+                                </div>
+                            </div>
+
+                            <!-- Murf AI Deployment & Tech Stack -->
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-[10px] font-mono text-textMuted">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-purple-400">Deployment: Render</span>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Python</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">FastAPI</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">Murf API</span>
+                                    <span class="px-2 py-0.5 rounded bg-borderSubtle/60 text-textMuted text-[11px] font-mono">AssemblyAI</span>
+                                </div>
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-textMain mb-3 group-hover:text-accent transition-colors">Murf AI Voice Studio</h3>
-                        <p class="text-textMuted text-sm leading-relaxed mb-6 flex-grow">
-                            An early exploration into integrating third-party AI APIs — combining Murf AI for text-to-speech with multiple voice and accent options, and AssemblyAI for real-time speech-to-text transcription. Features an Echo Bot mode where spoken input is transcribed and played back as an AI voice. Built with FastAPI on the backend and a responsive HTML/CSS/JS frontend, deployed on Render.
-                        </p>
-                        <!-- Tech Stack -->
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Python</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">FastAPI</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">Murf API</span>
-                            <span class="bg-bgHover text-textMain px-3 py-1.5 text-sm rounded-lg font-medium border border-bgHover">AssemblyAI</span>
-                        </div>
 
-                        <!-- Action Links -->
-                        <div class="flex gap-4 pt-4 border-t border-bgHover">
-                            <a href="https://github.com/keerthana12hv/Murf-AI-Voice-Studio" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                        <div class="flex items-center gap-4 pt-5 mt-5 border-t border-borderSubtle">
+                            <a href="https://github.com/keerthana12hv/Murf-AI-Voice-Studio" target="_blank" rel="noopener noreferrer" class="text-xs text-textMain hover:text-accentCyan font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-brands fa-github"></i> GitHub
                             </a>
-                            <a href="https://murf-ai-voice-tools.onrender.com/" target="_blank" class="text-accent font-semibold text-sm hover:text-white flex items-center gap-2 transition-colors">
+                            <a href="https://murf-ai-voice-tools.onrender.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-accentCyan hover:underline font-semibold flex items-center gap-1.5 transition-colors">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
                             </a>
                         </div>
@@ -382,137 +878,314 @@
         </section>
 
         <!-- Certifications Section -->
-        <section id="certifications" class="py-20 px-6">
-            <div class="max-w-5xl mx-auto reveal">
-                <div class="flex items-center gap-4 mb-12">
-                    <h2 class="text-3xl font-bold text-textMain">Certifications</h2>
-                    <div class="h-px bg-bgHover flex-grow"></div>
+        <section id="certifications" class="py-16 px-6 bg-bgCard/30 relative">
+            <div class="max-w-6xl mx-auto space-y-8 reveal">
+                
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-textMain tracking-tight flex items-center gap-3">
+                        <span class="text-accentCyan font-mono text-xl">05.</span> Certifications
+                    </h2>
+                    <div class="h-px bg-borderSubtle flex-grow"></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
-                        <div class="w-10 h-10 rounded bg-[#C74634]/10 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-cloud text-[#C74634]"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    
+                    <div class="p-5 rounded-2xl bg-bgCard border border-borderSubtle hover:border-accentCyan/40 transition-all flex items-start gap-4">
+                        <div class="w-11 h-11 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid fa-cloud"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-textMain text-sm">OCI Generative AI Professional</h4>
-                            <p class="text-xs text-textMuted mt-1">Oracle Cloud Infrastructure</p>
+                            <h3 class="font-bold text-textMain text-sm">OCI Generative AI Professional</h3>
+                            <p class="text-xs text-textMuted mt-0.5">Oracle Cloud Infrastructure</p>
                         </div>
                     </div>
 
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
-                        <div class="w-10 h-10 rounded bg-[#C74634]/10 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-certificate text-[#C74634]"></i>
+                    <div class="p-5 rounded-2xl bg-bgCard border border-borderSubtle hover:border-accentCyan/40 transition-all flex items-start gap-4">
+                        <div class="w-11 h-11 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid fa-certificate"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-textMain text-sm">OCI AI Foundations Associate</h4>
-                            <p class="text-xs text-textMuted mt-1">Oracle Cloud Infrastructure</p>
+                            <h3 class="font-bold text-textMain text-sm">OCI AI Foundations Associate</h3>
+                            <p class="text-xs text-textMuted mt-0.5">Oracle Cloud Infrastructure</p>
                         </div>
                     </div>
 
-                    <div class="bg-bgCard border border-bgHover p-6 rounded-xl flex items-start gap-4">
-                        <div class="w-10 h-10 rounded bg-blue-500/10 flex items-center justify-center shrink-0">
-                            <i class="fa-brands fa-java text-blue-500"></i>
+                    <div class="p-5 rounded-2xl bg-bgCard border border-borderSubtle hover:border-accentCyan/40 transition-all flex items-start gap-4">
+                        <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-brands fa-java"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-textMain text-sm">Java Programming Fundamentals</h4>
-                            <p class="text-xs text-textMuted mt-1">Infosys Springboard</p>
+                            <h3 class="font-bold text-textMain text-sm">Java Programming Fundamentals</h3>
+                            <p class="text-xs text-textMuted mt-0.5">Infosys Springboard</p>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </section>
 
         <!-- Resume CTA Section -->
-        <section id="resume" class="py-16 px-6 bg-accent/5 border-y border-bgHover reveal">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-textMain mb-4">Interested in my profile?</h2>
-                <p class="text-textMuted mb-8 max-w-2xl mx-auto">
-                    Take a deeper look at my technical experience, educational background, and project history by reviewing my resume.
-                </p>
-                <div class="flex justify-center gap-4 flex-wrap">
-                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" class="px-8 py-3 bg-accent hover:bg-accentHover text-white font-medium rounded-lg transition-colors duration-300 shadow-lg shadow-accent/20 flex items-center gap-2">
-                        <i class="fa-regular fa-eye"></i> View Resume
+        <section id="resume" class="py-16 px-6 relative">
+            <div class="max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-bgCard via-[#131d33] to-bgCard border border-borderSubtle p-8 sm:p-10 text-center space-y-5 reveal shadow-glow-indigo">
+                
+                <div class="w-12 h-12 rounded-2xl bg-accentCyan/10 text-accentCyan flex items-center justify-center text-xl mx-auto">
+                    <i class="fa-solid fa-file-invoice"></i>
+                </div>
+
+                <div class="space-y-1.5">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-textMain">View My Detailed Resume</h2>
+                    <p class="text-textMuted text-sm max-w-xl mx-auto">
+                        Explore my full academic history, core competencies, and project details in my updated resume.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-accentCyan text-black font-semibold text-sm hover:bg-accentCyan/90 transition-all shadow-glow-cyan flex items-center gap-2">
+                        <i class="fa-regular fa-eye"></i> View Resume Online
                     </a>
-                    <a href="J_Keerthana_Resume.pdf" download class="px-8 py-3 bg-bgCard hover:bg-bgHover border border-bgHover text-textMain font-medium rounded-lg transition-colors duration-300 flex items-center gap-2">
-                        <i class="fa-solid fa-download"></i> Download PDF
+                    <a href="https://drive.google.com/file/d/15GrYsAlfdXcv4Kut5q52GZg2Dp_Vzerl/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-bgCard hover:bg-borderSubtle text-textMain border border-borderSubtle font-medium text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Download Resume PDF
                     </a>
                 </div>
+
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 px-6">
-            <div class="max-w-3xl mx-auto text-center reveal">
-                <p class="text-accent font-medium mb-4">What's Next?</p>
-                <h2 class="text-4xl font-bold text-textMain mb-6">Get In Touch</h2>
-                <p class="text-textMuted leading-relaxed mb-10">
-                    I am currently open to internship and full-time software engineering roles. Whether you have an opportunity, a question, or just want to say hi, my inbox is always open.
+        <section id="contact" class="py-20 px-6 relative">
+            <div class="max-w-2xl mx-auto text-center space-y-8 reveal">
+                
+                <span class="text-accentCyan font-mono text-sm tracking-wide uppercase">06. What's Next?</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-textMain tracking-tight">Get In Touch</h2>
+                
+                <p class="text-textMuted text-sm sm:text-base leading-relaxed">
+                    I am actively seeking software development and backend engineering opportunities for 2027. Whether you have an opportunity or a question, feel free to send me an email.
                 </p>
-                <a href="mailto:jkeerthana925@gmail.com" class="inline-block px-8 py-4 border border-accent text-accent hover:bg-accent/10 font-medium rounded-lg transition-colors duration-300">
-                    Say Hello
-                </a>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <a href="mailto:jkeerthana925@gmail.com" class="px-8 py-4 rounded-xl bg-gradient-to-r from-accentCyan to-accentIndigo text-black font-bold text-sm shadow-glow-cyan hover:opacity-95 transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-paper-plane"></i> Say Hello
+                    </a>
+                    <button onclick="copyEmailToClipboard()" class="px-6 py-4 rounded-xl bg-bgCard border border-borderSubtle hover:border-borderHover text-textMain text-sm font-medium transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-copy text-accentCyan"></i> Copy Email
+                    </button>
+                </div>
+
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-bgCard border-t border-bgHover py-8 text-center">
-        <div class="flex justify-center space-x-6 mb-6">
-            <a href="https://github.com/keerthana12hv" target="_blank" class="text-textMuted hover:text-accent transition-colors text-xl">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/j-keerthana-28469a376" target="_blank" class="text-textMuted hover:text-accent transition-colors text-xl">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-            <a href="mailto:jkeerthana925@gmail.com" class="text-textMuted hover:text-accent transition-colors text-xl">
-                <i class="fa-regular fa-envelope"></i>
-            </a>
+    <footer class="bg-bgCard border-t border-borderSubtle py-8 text-center text-xs text-textMuted space-y-3">
+        <div class="flex justify-center space-x-6 text-lg">
+            <a href="https://github.com/keerthana12hv" target="_blank" rel="noopener noreferrer" class="hover:text-accentCyan transition-colors" title="GitHub Profile"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/j-keerthana-28469a376" target="_blank" rel="noopener noreferrer" class="hover:text-accentCyan transition-colors" title="LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:jkeerthana925@gmail.com" class="hover:text-accentCyan transition-colors" title="Send Email"><i class="fa-regular fa-envelope"></i></a>
         </div>
-        <p class="text-textMuted text-sm mb-2">© 2026 J Keerthana. All Rights Reserved.</p>
-        <p class="text-textMuted text-xs opacity-60">Built using HTML, Tailwind CSS, JavaScript and deployed using GitHub Pages.</p>
+        <p>© 2026 J Keerthana. Designed & Built for Software Engineering.</p>
     </footer>
 
-    <!-- Interactive Scripts -->
-    <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+    <!-- Toast Notification Popup -->
+    <div id="toast-notify" class="fixed bottom-6 right-6 px-4 py-3 rounded-xl bg-accentCyan text-black font-semibold text-xs shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check"></i> Email address copied to clipboard!
+    </div>
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+    <!-- Scroll To Top Button -->
+    <button id="back-to-top" aria-label="Back to top" onclick="scrollToTop()" class="fixed bottom-6 left-6 p-3 rounded-xl bg-bgCard border border-borderSubtle text-accentCyan opacity-0 pointer-events-none transition-all duration-300 hover:bg-borderSubtle z-40">
+        <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Hero Typing Effect with clean role title
+        const roles = ["Java Backend & Spring Boot", "PostgreSQL Databases", "RAG Pipelines & AI", "REST API Engineering"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextEl = document.getElementById('typed-text');
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                typedTextEl.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextEl.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 35 : 75;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2200;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 350;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typedTextEl) typeEffect();
+            initHeroCanvas();
         });
 
-        // Close mobile menu on link click
+        // Hero Particle Canvas Background
+        function initHeroCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            const particles = Array.from({ length: 30 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                radius: Math.random() * 2 + 1
+            }));
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#06b6d4';
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.08)';
+
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+        }
+
+        // Terminal Code Sandbox Tab Switching
+        function switchTermTab(tab) {
+            const viewJava = document.getElementById('term-view-java');
+            const viewJson = document.getElementById('term-view-json');
+            const btnJava = document.getElementById('tab-java-btn');
+            const btnJson = document.getElementById('tab-json-btn');
+
+            if (tab === 'java') {
+                viewJava.classList.remove('hidden');
+                viewJson.classList.add('hidden');
+                btnJava.className = 'px-2.5 py-1 rounded bg-bgCard text-accentCyan border border-borderSubtle font-medium';
+                btnJson.className = 'px-2.5 py-1 rounded text-textMuted hover:text-textMain font-medium';
+            } else {
+                viewJava.classList.add('hidden');
+                viewJson.classList.remove('hidden');
+                btnJson.className = 'px-2.5 py-1 rounded bg-bgCard text-accentCyan border border-borderSubtle font-medium';
+                btnJava.className = 'px-2.5 py-1 rounded text-textMuted hover:text-textMain font-medium';
+            }
+        }
+
+        // Skill Filter Tabs
+        function filterSkills(category) {
+            const cards = document.querySelectorAll('.skill-card');
+            const buttons = document.querySelectorAll('.skill-tab-btn');
+
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.className = 'skill-tab-btn px-4 py-2 rounded-lg bg-accentCyan text-black font-semibold text-xs transition-all';
+                } else {
+                    btn.className = 'skill-tab-btn px-4 py-2 rounded-lg bg-bgCard text-textMuted hover:text-textMain font-medium text-xs border border-borderSubtle transition-all';
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Copy Email Toast
+        function copyEmailToClipboard() {
+            navigator.clipboard.writeText('jkeerthana925@gmail.com').then(() => {
+                const toast = document.getElementById('toast-notify');
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+            });
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                menu.classList.add('hidden');
+                mobileMenu.classList.add('hidden');
             });
         });
 
-        // Scroll Reveal Animation via Intersection Observer
-        const revealElements = document.querySelectorAll('.reveal');
+        // Scroll Progress Bar & Back to Top
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
 
-        const revealCallback = (entries, observer) => {
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (winScroll > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Intersection Observer for Scroll Reveals
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target); // Reveal only once
+                    observer.unobserve(entry.target);
                 }
             });
-        };
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
-
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
-        });
+        revealElements.forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
